@@ -1,0 +1,85 @@
+// 单位rem
+@function px ($num) {
+  @return ($num / 75)+rem;
+}
+
+// 字体全套
+@mixin font-all($size: 28px, $color: $color-font, $fontFamily: $family-main) {
+  font-family: $fontFamily;
+  font-size: $size;
+  color: $color;
+}
+
+// 设备安全区适配
+/* 用法：
+  @include mediaDevice {
+    & {
+      height: 34px;
+    }
+  }
+*/
+@mixin mediaDevice {
+  // 各个设备型号(参考：https://www.jianshu.com/p/f94724d235b0)
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3), // iphoneX、iphoneXs、iphone11 pro
+  only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2), // iphone XR、iphone11
+  only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3), // iphone Xs Max、iphone11 pro max
+  only screen and (device-width: 360px) and (device-height: 780px) and (-webkit-device-pixel-ratio: 3), // iphone12 mini
+  only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3), // iphone12、iphone12 pro
+  only screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) // iphone12 pro max
+  {
+    @content;
+  }
+}
+
+// input的placeholder增加样式
+/* 用法：
+  @include placeHolder {
+    font-size: 14px;
+    color: #f0f0f0;
+  }
+*/
+@mixin placeHolder {
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    @content;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    @content;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    @content;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    @content;
+  }
+
+}
+
+// 多行省略样式
+/* 用法：
+  @include more(3)
+*/
+@mixin more ($line: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}
+
+// 禁止选中文字，禁止复制
+/* 用法：
+  @include stopSelection()
+*/
+@mixin stopSelection () {
+  -moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
